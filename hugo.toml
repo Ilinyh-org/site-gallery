@@ -1,0 +1,8 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Site Screenshots Gallery"
+theme = "gallery"
+
+[params]
+  # Base public URL of the S3 bucket holding screenshots (no trailing slash).
+  s3PublicUrl = "https://my-bucket.s3.amazonaws.com"

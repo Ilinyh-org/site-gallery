@@ -1,0 +1,18 @@
+# Site list for the screenshot gallery.
+# Fields:
+#   name       - display name
+#   url        - main site URL (click target)
+#   slug       - identifier used in screenshot filenames / S3 keys
+#   pages      - paths to capture (optional, default: ["/"])
+#   tags       - tags for client-side filtering
+#   categories - categories for client-side filtering
+sites:
+  - name: "Example Site"
+    url: "https://example.com"
+    slug: "example"
+    pages:
+      - "/"
+      - "/pricing"
+      - "/about"
+    tags: ["saas", "landing"]
+    categories: ["marketing"]
