@@ -95,3 +95,8 @@ All of these must be re-run once exec works.
 3. S3 credentials + endpoint/bucket (spec §10 fields) — needed before real capture/upload.
 4. Deploy target (spec §10 `DEPLOY_TARGET`) and preferred format (rsync? S3 website? Netlify?).
 5. Fix the GitHub Identity connection so exec works again (blocks all local verification and git init).
+
+## 2026-11-06 — heartbeat 22:17 UTC
+- Issue poll: Ilinyh-org/site-gallery has zero issues (none assigned to AiTimosha). No issue work.
+- Push probe (quiet): `git ls-remote origin` still silent-fails — git credentials still absent. Bootstrap push remains one command away once a writable credential exists (unchanged blocker).
+- Roadmap step (tests, non-capture scope): added `tests/lib.test.js` — 5 unit tests for pageSlug, screenshotKeys, publicUrl, loadConfig (valid + malformed). `npm test` → 5 pass / 0 fail. New `test` script in package.json. Commit `56b72cc` on `main` (local only).
