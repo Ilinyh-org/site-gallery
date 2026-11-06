@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node scripts/dev.js",
     "build": "node scripts/build.js",
-    "deploy": "node scripts/build.js && node scripts/deploy.js"
+    "deploy": "node scripts/build.js && node scripts/deploy.js",
+    "test": "node --test tests/*.test.js"
   },
   "dependencies": {
     "playwright": "^1.45.0",
