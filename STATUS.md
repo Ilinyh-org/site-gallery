@@ -113,3 +113,7 @@ All of these must be re-run once exec works.
   - Fixed layout warnings via `disableKinds = ["taxonomy", "term", "section"]` in hugo.toml (single-page gallery; home layout renders everything).
   - Clean build: public/{index.html, css, js, sitemap.xml, index.xml}, no WARN lines. npm test still passing.
 - Commits: `5741fce`, `add2615` on `main` (local only; bootstrap push still blocked on credentials).
+
+## 2026-11-07 — roadmap: docs polish + spec §12 acceptance audit
+- docs/acceptance-audit.md: all 14 spec §12 criteria mapped to done/deferred/open-question.
+- README: test instructions, hugo PATH note, links to audit + STATUS.
