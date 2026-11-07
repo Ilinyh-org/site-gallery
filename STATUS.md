@@ -113,3 +113,8 @@ All of these must be re-run once exec works.
   - Fixed layout warnings via `disableKinds = ["taxonomy", "term", "section"]` in hugo.toml (single-page gallery; home layout renders everything).
   - Clean build: public/{index.html, css, js, sitemap.xml, index.xml}, no WARN lines. npm test still passing.
 - Commits: `5741fce`, `add2615` on `main` (local only; bootstrap push still blocked on credentials).
+
+## 2026-11-07 — roadmap: light/dark audit + lazy-loading pass
+- Theme audit: auto (prefers-color-scheme) + manual [data-theme] existed; added localStorage persistence with pre-paint restore and theme-color metas (light/dark).
+- Lazy loading: imgs already lazy; added decoding=async + width/height 1280x720 to kill layout shift (spec 8).
+- Verified: node --check, node --test 5/5 (dev suite; PR #2 adds 11 more when merged), hugo --minify clean.
