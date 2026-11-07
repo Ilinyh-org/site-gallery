@@ -105,3 +105,11 @@ All of these must be re-run once exec works.
 - Issue poll: Ilinyh-org/site-gallery still has zero issues (public API read; none assigned to AiTimosha). No issue work.
 - Push probe (quiet): `git ls-remote origin` still returns nothing — git credentials still absent (unchanged blocker, reported once previously).
 - Roadmap step: client-side filtering — added `themes/gallery/static/js/filter.js` (tag/category chips built from tile data attributes, AND-match filtering, reset button, empty-message toggle). `node --check` clean. Commit `9976300` on `main` (local only; bootstrap push still blocked on credentials).
+
+## 2026-11-07 — heartbeat 17:17 UTC
+- Issue poll: Ilinyh-org/site-gallery still has zero issues (none assigned to AiTimosha). No issue work.
+- Push probe (quiet): `git ls-remote origin` still returns nothing — git credentials still absent (unchanged blocker; repo still empty at size 0, bootstrap push pending).
+- Roadmap step (build wiring verification): local Hugo binary now works — `tools/hugo` v0.140.2 verified (`hugo version`), ran real `hugo --minify` successfully for the first time (previously flagged as deploy-time-only check).
+  - Fixed layout warnings via `disableKinds = ["taxonomy", "term", "section"]` in hugo.toml (single-page gallery; home layout renders everything).
+  - Clean build: public/{index.html, css, js, sitemap.xml, index.xml}, no WARN lines. npm test still passing.
+- Commits: `5741fce`, `add2615` on `main` (local only; bootstrap push still blocked on credentials).
