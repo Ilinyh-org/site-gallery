@@ -3,7 +3,7 @@ languageCode = "en-us"
 title = "Site Screenshots Gallery"
 theme = "gallery"
 # Single-page gallery: no taxonomy/term pages (avoids layout warnings).
-disableKinds = ["taxonomy", "term"]
+disableKinds = ["taxonomy", "term", "section"]
 
 [params]
   # Base public URL of the S3 bucket holding screenshots (no trailing slash).
