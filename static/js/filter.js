@@ -62,4 +62,7 @@ import { matches, uniqueLabels } from './filter-core.js';
   collectLabels(tagBox, 'tags');
   collectLabels(catBox, 'categories');
   apply();
+
+  // Exposed so tiles hidden on image-load errors (spec 2.5) can re-run the empty-state check.
+  window.filterCheck = apply;
 })();
