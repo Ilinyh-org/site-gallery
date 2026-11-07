@@ -37,7 +37,8 @@
          href="{{ $url }}" target="_blank" rel="noopener">
         <img src="{{ $.Site.Params.s3PublicUrl }}/screenshots/{{ $slug }}/{{ $pageSlug }}.png"
              alt="{{ $slug }} — {{ $pageSlug }}" loading="lazy" decoding="async"
-             width="1280" height="720">
+             width="1280" height="720"
+             onerror="this.closest('.tile').hidden=true;window.filterCheck&&filterCheck()">
       </a>
       {{ end }}
       {{ end }}
@@ -45,6 +46,6 @@
     <p id="empty-message" hidden>Nothing found</p>
   </main>
 
-  <script src="{{ "js/filter.js" | relURL }}"></script>
+  <script type="module" src="{{ "js/filter.js" | relURL }}"></script>
 </body>
 </html>

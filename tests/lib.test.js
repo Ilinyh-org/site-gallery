@@ -41,3 +41,36 @@ test('loadConfig loads the real config/sites.yaml', () => {
 test('loadConfig rejects malformed config', () => {
   assert.throws(() => loadConfig('/nonexistent-root'), Error);
 });
+
+import fs from 'node:fs';
+import os from 'node:os';
+
+function configRoot(yaml) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sgb-config-'));
+  fs.mkdirSync(path.join(root, 'config'));
+  fs.writeFileSync(path.join(root, 'config', 'sites.yaml'), yaml);
+  return root;
+}
+
+test('loadConfig applies spec defaults for omitted fields', () => {
+  const root = configRoot('sites:\n  - name: "A"\n    url: "https://a.example"\n    slug: "a"\n');
+  const [site] = loadConfig(root);
+  assert.deepEqual(site.pages, ['/']);
+  assert.deepEqual(site.tags, []);
+  assert.deepEqual(site.categories, []);
+});
+
+test('loadConfig rejects entries missing name/url/slug', () => {
+  const root = configRoot('sites:\n  - name: "A"\n    url: "https://a.example"\n');
+  assert.throws(() => loadConfig(root), /name, url, slug/);
+});
+
+test('loadConfig aborts on invalid YAML (spec 9)', () => {
+  const root = configRoot('sites: [unclosed');
+  assert.throws(() => loadConfig(root));
+});
+
+test('loadConfig aborts when sites list is absent', () => {
+  const root = configRoot('something_else: true\n');
+  assert.throws(() => loadConfig(root), /sites/);
+});
