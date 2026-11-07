@@ -118,3 +118,6 @@ All of these must be re-run once exec works.
 - Extracted pure filter matching into static/js/filter-core.js; filter.js is now a thin DOM layer (type=module).
 - tests/filter-core.test.js: 8 cases (multi-select, tag+category AND, missing attrs, empty state). 12/12 pass.
 - Hugo build verified with module script + copied filter-core.js.
+
+## 2026-11-07 — sites.yaml handling polish (same PR #2)
+- tests/lib.test.js +4: omitted-field defaults (pages/tags/categories), missing name/url/slug rejection, invalid YAML abort (spec 9), absent sites list abort.
