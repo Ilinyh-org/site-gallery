@@ -133,3 +133,7 @@ All of these must be re-run once exec works.
 - Theme audit: auto (prefers-color-scheme) + manual [data-theme] existed; added localStorage persistence with pre-paint restore and theme-color metas (light/dark).
 - Lazy loading: imgs already lazy; added decoding=async + width/height 1280x720 to kill layout shift (spec 8).
 - Verified: node --check, node --test 5/5 (dev suite; PR #2 adds 11 more when merged), hugo --minify clean.
+
+## 2026-11-07 — roadmap: docs polish + spec §12 acceptance audit
+- docs/acceptance-audit.md: all 14 spec §12 criteria mapped to done/deferred/open-question.
+- README: test instructions, hugo PATH note, links to audit + STATUS.
