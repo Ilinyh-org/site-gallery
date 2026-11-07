@@ -114,6 +114,26 @@ All of these must be re-run once exec works.
   - Clean build: public/{index.html, css, js, sitemap.xml, index.xml}, no WARN lines. npm test still passing.
 - Commits: `5741fce`, `add2615` on `main` (local only; bootstrap push still blocked on credentials).
 
+## 2026-11-07 — roadmap: gallery theme polish
+- Branch feat/gallery-theme-polish (from dev), pushed; PR #1 into dev (owner merges).
+- spec 2.5: tiles hide on image-load error + re-run empty-state check via window.filterCheck.
+- spec 7: 2-column mobile grid <=640px, focus-visible styles on tiles.
+- Verified: node --check, hugo --minify clean (local v0.140.2).
+- Note: dev->main PRs remain owner-gated; never opened without explicit [owner-relay].
+
+## 2026-11-07 — roadmap: sites.yaml/filter tests
+- Extracted pure filter matching into static/js/filter-core.js; filter.js is now a thin DOM layer (type=module).
+- tests/filter-core.test.js: 8 cases (multi-select, tag+category AND, missing attrs, empty state). 12/12 pass.
+- Hugo build verified with module script + copied filter-core.js.
+
+## 2026-11-07 — sites.yaml handling polish (same PR #2)
+- tests/lib.test.js +4: omitted-field defaults (pages/tags/categories), missing name/url/slug rejection, invalid YAML abort (spec 9), absent sites list abort.
+
+## 2026-11-07 — roadmap: light/dark audit + lazy-loading pass
+- Theme audit: auto (prefers-color-scheme) + manual [data-theme] existed; added localStorage persistence with pre-paint restore and theme-color metas (light/dark).
+- Lazy loading: imgs already lazy; added decoding=async + width/height 1280x720 to kill layout shift (spec 8).
+- Verified: node --check, node --test 5/5 (dev suite; PR #2 adds 11 more when merged), hugo --minify clean.
+
 ## 2026-11-07 — roadmap: docs polish + spec §12 acceptance audit
 - docs/acceptance-audit.md: all 14 spec §12 criteria mapped to done/deferred/open-question.
 - README: test instructions, hugo PATH note, links to audit + STATUS.
