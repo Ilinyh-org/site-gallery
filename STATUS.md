@@ -113,3 +113,8 @@ All of these must be re-run once exec works.
   - Fixed layout warnings via `disableKinds = ["taxonomy", "term", "section"]` in hugo.toml (single-page gallery; home layout renders everything).
   - Clean build: public/{index.html, css, js, sitemap.xml, index.xml}, no WARN lines. npm test still passing.
 - Commits: `5741fce`, `add2615` on `main` (local only; bootstrap push still blocked on credentials).
+
+## 2026-11-07 — roadmap: sites.yaml/filter tests
+- Extracted pure filter matching into static/js/filter-core.js; filter.js is now a thin DOM layer (type=module).
+- tests/filter-core.test.js: 8 cases (multi-select, tag+category AND, missing attrs, empty state). 12/12 pass.
+- Hugo build verified with module script + copied filter-core.js.
