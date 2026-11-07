@@ -100,3 +100,8 @@ All of these must be re-run once exec works.
 - Issue poll: Ilinyh-org/site-gallery has zero issues (none assigned to AiTimosha). No issue work.
 - Push probe (quiet): `git ls-remote origin` still silent-fails — git credentials still absent. Bootstrap push remains one command away once a writable credential exists (unchanged blocker).
 - Roadmap step (tests, non-capture scope): added `tests/lib.test.js` — 5 unit tests for pageSlug, screenshotKeys, publicUrl, loadConfig (valid + malformed). `npm test` → 5 pass / 0 fail. New `test` script in package.json. Commit `56b72cc` on `main` (local only).
+
+## 2026-11-07 — heartbeat 00:17 UTC
+- Issue poll: Ilinyh-org/site-gallery still has zero issues (public API read; none assigned to AiTimosha). No issue work.
+- Push probe (quiet): `git ls-remote origin` still returns nothing — git credentials still absent (unchanged blocker, reported once previously).
+- Roadmap step: client-side filtering — added `themes/gallery/static/js/filter.js` (tag/category chips built from tile data attributes, AND-match filtering, reset button, empty-message toggle). `node --check` clean. Commit `9976300` on `main` (local only; bootstrap push still blocked on credentials).
