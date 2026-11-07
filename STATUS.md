@@ -137,3 +137,12 @@ All of these must be re-run once exec works.
 ## 2026-11-07 — roadmap: docs polish + spec §12 acceptance audit
 - docs/acceptance-audit.md: all 14 spec §12 criteria mapped to done/deferred/open-question.
 - README: test instructions, hugo PATH note, links to audit + STATUS.
+
+## 2026-11-07 — SELF-MERGE run (owner directive 19:54 UTC)
+- GH_TOKEN back to 200 (AiTimosha). Merged via API in order: PR #1 (200), PR #2 (405 conflict → merged dev into branch, resolved STATUS.md, re-merged 200), PR #3 (405 → resolved template + STATUS conflicts, re-merged 200), PR #4 created (201) → merged (200).
+- All four feat branches removed (remote + local).
+- Post-merge sanity on integrated dev (fb3d98e): node --test 16/16, node --check all scripts OK, hugo --minify 0 errors/warnings.
+- main untouched (3f337d2, owner-only).
+
+## 2026-11-07 — npm test script (PR #5)
+- package.json: added "test": "node --test". Tests green; this PR also carries the SELF-MERGE run STATUS log above.
