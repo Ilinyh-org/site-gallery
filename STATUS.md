@@ -128,3 +128,8 @@ All of these must be re-run once exec works.
 
 ## 2026-11-07 — sites.yaml handling polish (same PR #2)
 - tests/lib.test.js +4: omitted-field defaults (pages/tags/categories), missing name/url/slug rejection, invalid YAML abort (spec 9), absent sites list abort.
+
+## 2026-11-07 — roadmap: light/dark audit + lazy-loading pass
+- Theme audit: auto (prefers-color-scheme) + manual [data-theme] existed; added localStorage persistence with pre-paint restore and theme-color metas (light/dark).
+- Lazy loading: imgs already lazy; added decoding=async + width/height 1280x720 to kill layout shift (spec 8).
+- Verified: node --check, node --test 5/5 (dev suite; PR #2 adds 11 more when merged), hugo --minify clean.

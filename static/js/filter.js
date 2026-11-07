@@ -54,8 +54,13 @@ import { matches, uniqueLabels } from './filter-core.js';
     toggle.addEventListener('click', () => {
       const current = document.documentElement.dataset.theme || '';
       const next = order[(order.indexOf(current) + 1) % order.length];
-      if (next) document.documentElement.dataset.theme = next;
-      else delete document.documentElement.dataset.theme;
+      if (next) {
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      } else {
+        delete document.documentElement.dataset.theme;
+        try { localStorage.removeItem('theme'); } catch (e) {}
+      }
     });
   }
 
