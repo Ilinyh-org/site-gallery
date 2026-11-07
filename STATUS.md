@@ -146,3 +146,7 @@ All of these must be re-run once exec works.
 
 ## 2026-11-07 — npm test script (PR #5)
 - package.json: added "test": "node --test". Tests green; this PR also carries the SELF-MERGE run STATUS log above.
+
+## 2026-11-07 — heartbeat 22:17 UTC
+- Issue poll: Ilinyh-org/site-gallery has 0 open issues (API). No issue work.
+- Roadmap step (build wiring): build.js now honors BUILD_DRY_RUN=1 — capture stubbed, S3 upload dry-runs, then real `hugo --minify`. Verified: BUILD_DRY_RUN=1 node scripts/build.js → clean build (hugo v0.140.2); node --test green; node --check OK. Commit on feat/dry-run-build → PR into dev (self-merge per directive).
