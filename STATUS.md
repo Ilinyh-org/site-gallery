@@ -113,3 +113,7 @@ All of these must be re-run once exec works.
   - Fixed layout warnings via `disableKinds = ["taxonomy", "term", "section"]` in hugo.toml (single-page gallery; home layout renders everything).
   - Clean build: public/{index.html, css, js, sitemap.xml, index.xml}, no WARN lines. npm test still passing.
 - Commits: `5741fce`, `add2615` on `main` (local only; bootstrap push still blocked on credentials).
+
+## 2026-11-07 — npm test script (local, pending push)
+- package.json: added "test": "node --test". npm test → 5/5 on dev suite.
+- Branch feat/npm-test-script stays LOCAL: git push will 401 until the owner refreshes GH_TOKEN. Will push + open PR #5 (or fold into #4's branch) when the token is back.
