@@ -157,3 +157,8 @@ All of these must be re-run once exec works.
 - Verified: BUILD_DRY_RUN=1 build clean (hugo --minify); node --test 16/16; node --check OK.
 - Fix via PR #7 → merged into dev (f886102); branch deleted. main untouched (owner-only).
 - Note: direct pushes to dev now blocked by repo rules; all changes go via PR.
+
+## 2026-11-08 — heartbeat 15:17 UTC
+- Issue poll: Ilinyh-org/site-gallery 0 open issues, none assigned to AiTimosha. No issue work.
+- Roadmap: all non-capture spec §12 items complete; remaining audit rows are DEFERRED (S3/screenshots, owner directive). No actionable step this tick.
+- Verified: node --test 16/16; hugo --minify clean; git state synced with origin/dev.
