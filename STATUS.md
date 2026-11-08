@@ -150,3 +150,10 @@ All of these must be re-run once exec works.
 ## 2026-11-07 — heartbeat 22:17 UTC
 - Issue poll: Ilinyh-org/site-gallery has 0 open issues (API). No issue work.
 - Roadmap step (build wiring): build.js now honors BUILD_DRY_RUN=1 — capture stubbed, S3 upload dry-runs, then real `hugo --minify`. Verified: BUILD_DRY_RUN=1 node scripts/build.js → clean build (hugo v0.140.2); node --test green; node --check OK. Commit on feat/dry-run-build → PR into dev (self-merge per directive).
+
+## 2026-11-08 — heartbeat 01:17 UTC
+- Issue poll: Ilinyh-org/site-gallery 0 open issues. No issue work.
+- Regression fixed (dry-run build broke): BUILD_DRY_RUN stub capture returned a path without writing a file (ENOENT upload warnings); stub now writes a 1x1 PNG. build.js now resolves tools/hugo before PATH (tools/ binary had been lost — reinstalled v0.140.2).
+- Verified: BUILD_DRY_RUN=1 build clean (hugo --minify); node --test 16/16; node --check OK.
+- Fix via PR #7 → merged into dev (f886102); branch deleted. main untouched (owner-only).
+- Note: direct pushes to dev now blocked by repo rules; all changes go via PR.
