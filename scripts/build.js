@@ -10,7 +10,11 @@ const dryRun = process.env.BUILD_DRY_RUN === '1';
 
 const stubCapture = async (site, page, outDir) => {
   const path = await import('node:path');
+  const fs = await import('node:fs/promises');
   const png = path.join(outDir, site.slug, `${page}.png`);
+  await fs.mkdir(path.dirname(png), { recursive: true });
+  // 1x1 transparent PNG placeholder so dry-run upload has a real file to read.
+  await fs.writeFile(png, Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==', 'base64'));
   return { png, gif: null };
 };
 
@@ -27,9 +31,10 @@ console.log(`Captured: ${results.updated.length}, uploaded: ${uploaded.length}, 
 fs.mkdirSync('data', { recursive: true });
 fs.copyFileSync('config/sites.yaml', 'data/sites.yaml');
 
-// Hugo is expected on PATH; missing hugo aborts the build (spec 5.2).
+// Hugo is expected on PATH (or tools/hugo); missing hugo aborts the build (spec 5.2).
+const hugoBin = fs.existsSync('tools/hugo') ? './tools/hugo' : 'hugo';
 if (dryRun) {
   console.log('[dry-run] capture stubbed, S3 upload skipped');
 }
-execSync('hugo --minify', { stdio: 'inherit' });
+execSync(`${hugoBin} --minify`, { stdio: 'inherit' });
 console.log('Build complete: public/');
