@@ -186,3 +186,10 @@ All of these must be re-run once exec works.
 - Issue poll: Ilinyh-org/site-gallery 0 open issues. No issue work.
 - Roadmap: no actionable step this tick (remaining rows DEFERRED per owner directive).
 - Verified: node --test 16/16; git state synced with origin/dev.
+
+## 2026-11-20 — wake tick (owner request 15:00 UTC)
+- Repo state re-read: dev @ 2e28f6a (heartbeat docs PRs #12-#14 merged since last tick).
+- Issue poll: issue #15 OPEN, ASSIGNED to AiTimosha — work order. Concept change: static site, screenshots in build, new stack, GitHub Actions → GitHub Pages; owner invited sub-issue split.
+- Claimed #15 (comment id 7042876503) with plan; created sub-issues #16 (static rewrite, drop Hugo), #17 (Actions → Pages), #18 (capture in CI build).
+- NOTE: recurring API 401s were self-inflicted — a literal placeholder in the Authorization header; fixed by using the git credential store value. Token healthy.
+- Next tick: start #16 (static rewrite) on feat/*; self-merge rules apply.
