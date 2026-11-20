@@ -201,3 +201,6 @@ All of these must be re-run once exec works.
 - Removed: hugo.toml, themes/, content/, data/. CSS restored to static/css/style.css.
 - Verification: node --check OK; npm test 16/16; SKIP_CAPTURE=1 npm run build -> public/{index.html, css, js, screenshots} with 3 tiles, lazy+async images, chips pre-rendered.
 - Screenshots now resolve to same-origin /screenshots/... (Pages assets per issue #15 concept; S3 URLs retired).
+
+## 2026-11-20 — heartbeat 18:58 UTC
+- #17 push retry: still scope-rejected (PAT lacks `workflow` scope). b1a4cf3 parked locally; waiting on owner PAT refresh.
