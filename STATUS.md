@@ -193,3 +193,11 @@ All of these must be re-run once exec works.
 - Claimed #15 (comment id 7042876503) with plan; created sub-issues #16 (static rewrite, drop Hugo), #17 (Actions → Pages), #18 (capture in CI build).
 - NOTE: recurring API 401s were self-inflicted — a literal placeholder in the Authorization header; fixed by using the git credential store value. Token healthy.
 - Next tick: start #16 (static rewrite) on feat/*; self-merge rules apply.
+
+## 2026-11-20 — sub-issue #16: static rewrite (drop Hugo layer)
+- New scripts/generate.js: renders public/index.html + copies static/ assets from config/sites.yaml.
+- build.js: capture (skippable via SKIP_CAPTURE=1; warn-and-continue) -> generate -> public/. Hugo dependency removed.
+- dev.js: plain static server on :1313 (hugo server removed).
+- Removed: hugo.toml, themes/, content/, data/. CSS restored to static/css/style.css.
+- Verification: node --check OK; npm test 16/16; SKIP_CAPTURE=1 npm run build -> public/{index.html, css, js, screenshots} with 3 tiles, lazy+async images, chips pre-rendered.
+- Screenshots now resolve to same-origin /screenshots/... (Pages assets per issue #15 concept; S3 URLs retired).

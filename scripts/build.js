@@ -1,40 +1,32 @@
-// Build orchestrator (spec 6.1): capture -> upload -> hugo --minify -> public/.
-// BUILD_DRY_RUN=1 stubs capture and skips real S3 upload (verification without creds).
+// Build (sub-issue #16, replaces the Hugo-era orchestrator):
+// capture screenshots -> generate static site -> public/.
+// Capture/upload remain wired for the CI build (sub-issue #18); locally they
+// degrade gracefully when Playwright/Chromium cannot run (spec 9 warn-and-continue).
 import 'dotenv/config';
-import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import { captureAll } from './capture.js';
 import { uploadAll } from './upload.js';
+import { generate } from './generate.js';
 
-const dryRun = process.env.BUILD_DRY_RUN === '1';
-
-const stubCapture = async (site, page, outDir) => {
-  const path = await import('node:path');
-  const fs = await import('node:fs/promises');
-  const png = path.join(outDir, site.slug, `${page}.png`);
-  await fs.mkdir(path.dirname(png), { recursive: true });
-  // 1x1 transparent PNG placeholder so dry-run upload has a real file to read.
-  await fs.writeFile(png, Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==', 'base64'));
-  return { png, gif: null };
-};
-
-const results = await captureAll({ captureFn: dryRun ? stubCapture : null }); // { updated, skipped, failed }
-const { uploaded, failed: uploadFailed } = await uploadAll(results.updated, { dryRun });
-
-for (const f of results.failed) {
-  console.warn(`⚠️ WARNING: could not capture screenshot for ${f.slug}${f.page}: ${f.reason}`);
+let captureNote = 'skipped';
+let results = null;
+if (process.env.SKIP_CAPTURE === '1') {
+  captureNote = 'SKIP_CAPTURE=1';
+} else {
+  try {
+    results = await captureAll(); // { updated, skipped, failed }
+    await uploadAll(results.updated, { dryRun: true }); // S3 upload deferred; count-only dry run
+    for (const f of results.failed) {
+      console.warn(`⚠️ WARNING: could not capture screenshot for ${f.slug}${f.page}: ${f.reason}`);
+    }
+    captureNote = `${results.updated.length} captured, ${results.failed.length} failed`;
+  } catch (err) {
+    console.warn(`⚠️ WARNING: capture unavailable in this environment: ${err.message}`);
+  }
 }
-console.log(`Captured: ${results.updated.length}, uploaded: ${uploaded.length}, ` +
-  `upload failures: ${uploadFailed.length}, capture errors: ${results.failed.length}`);
 
-// Expose sites.yaml to Hugo templates via the data directory.
-fs.mkdirSync('data', { recursive: true });
-fs.copyFileSync('config/sites.yaml', 'data/sites.yaml');
-
-// Hugo is expected on PATH (or tools/hugo); missing hugo aborts the build (spec 5.2).
-const hugoBin = fs.existsSync('tools/hugo') ? './tools/hugo' : 'hugo';
-if (dryRun) {
-  console.log('[dry-run] capture stubbed, S3 upload skipped');
-}
-execSync(`${hugoBin} --minify`, { stdio: 'inherit' });
+// Static site generation from config/sites.yaml (source of truth).
+const gen = await generate();
+console.log(`Captured: ${captureNote}`);
+console.log(`Generated ${gen.page} (${gen.tiles} tiles)`);
 console.log('Build complete: public/');
