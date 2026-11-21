@@ -220,4 +220,4 @@ All of these must be re-run once exec works.
   - scripts/copy-screenshots.js + build.js: captured .tmp/screenshots copied into public/screenshots so same-origin tiles resolve in the Pages build (gap found: generate.js never shipped captures).
   - pngjs added to dependencies (GIF encode requires it; its absence would have failed every capture in CI).
 - Verified: node --check OK; npm test 16/16; SKIP_CAPTURE=1 build clean.
-- Push of the workflow file = this tick's one scope probe (previous rejections were pushes with .github/workflows content).
+- Push of the workflow file = this tick's one scope probe: REJECTED again (PAT lacks `workflow` scope). Also removed a stray empty feat/17-pages-workflow branch briefly pushed at tick start (no workflow content; artifact of the lost-commit checkout — work rebuilt as commit 402bc3b). Parked locally; waiting on owner PAT refresh.
