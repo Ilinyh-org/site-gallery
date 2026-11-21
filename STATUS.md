@@ -209,3 +209,6 @@ All of these must be re-run once exec works.
 - Issue poll: open assigned issues #15/#16/#17/#18; no new IlinyhGleb comments. No new work orders.
 - #17 push retry: still scope-rejected (PAT lacks `workflow` scope). b1a4cf3 parked locally; waiting on owner PAT refresh.
 - Roadmap: #18 (capture in CI) depends on #17's workflow; no independent actionable step this tick. Verification baseline intact (node --test 16/16, SKIP_CAPTURE=1 build clean).
+
+## 2026-11-21 — heartbeat 15:13 UTC
+- #18 taken per directive: claimed on the issue; PARKED under the #17 anti-noise rule — same workflow-scope wall (push retried once this tick, still rejected). Implementation rides the parked feat/17-pages-workflow commit b1a4cf3 (one combined branch for both issues when the scope lands).
