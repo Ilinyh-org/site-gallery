@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import { captureAll } from './capture.js';
 import { uploadAll } from './upload.js';
 import { generate } from './generate.js';
+import { copyScreenshots } from './copy-screenshots.js';
 
 let captureNote = 'skipped';
 let results = null;
@@ -27,6 +28,7 @@ if (process.env.SKIP_CAPTURE === '1') {
 
 // Static site generation from config/sites.yaml (source of truth).
 const gen = await generate();
+if (results) await copyScreenshots(); // captured screenshots ship with the site (CI/Pages)
 console.log(`Captured: ${captureNote}`);
 console.log(`Generated ${gen.page} (${gen.tiles} tiles)`);
 console.log('Build complete: public/');

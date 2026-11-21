@@ -212,3 +212,12 @@ All of these must be re-run once exec works.
 
 ## 2026-11-21 — heartbeat 15:13 UTC
 - #18 taken per directive: claimed on the issue; PARKED under the #17 anti-noise rule — same workflow-scope wall (push retried once this tick, still rejected). Implementation rides the parked feat/17-pages-workflow commit b1a4cf3 (one combined branch for both issues when the scope lands).
+
+## 2026-11-21 — heartbeat 21:17 UTC
+- Issue poll: open assigned #15/#16/#17/#18; no new IlinyhGleb comments. No new work orders.
+- Parked commit b1a4cf3 no longer existed locally (lost in an earlier branch cleanup); rebuilt #17+#18 from scratch on feat/17-pages-workflow:
+  - .github/workflows/build-and-publish.yml: on push to dev / dispatch; npm ci, playwright chromium --with-deps, npm test, npm run build (real capture; warn-and-continue), upload-pages-artifact + deploy-pages.
+  - scripts/copy-screenshots.js + build.js: captured .tmp/screenshots copied into public/screenshots so same-origin tiles resolve in the Pages build (gap found: generate.js never shipped captures).
+  - pngjs added to dependencies (GIF encode requires it; its absence would have failed every capture in CI).
+- Verified: node --check OK; npm test 16/16; SKIP_CAPTURE=1 build clean.
+- Push of the workflow file = this tick's one scope probe (previous rejections were pushes with .github/workflows content).
