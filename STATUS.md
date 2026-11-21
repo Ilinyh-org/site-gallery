@@ -204,3 +204,8 @@ All of these must be re-run once exec works.
 
 ## 2026-11-20 — heartbeat 18:58 UTC
 - #17 push retry: still scope-rejected (PAT lacks `workflow` scope). b1a4cf3 parked locally; waiting on owner PAT refresh.
+
+## 2026-11-21 — heartbeat 09:17 UTC
+- Issue poll: open assigned issues #15/#16/#17/#18; no new IlinyhGleb comments. No new work orders.
+- #17 push retry: still scope-rejected (PAT lacks `workflow` scope). b1a4cf3 parked locally; waiting on owner PAT refresh.
+- Roadmap: #18 (capture in CI) depends on #17's workflow; no independent actionable step this tick. Verification baseline intact (node --test 16/16, SKIP_CAPTURE=1 build clean).
