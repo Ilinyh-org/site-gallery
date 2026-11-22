@@ -252,3 +252,10 @@ All of these must be re-run once exec works.
 ## 2026-11-22 — Pages deploy attempt 3 (after 10-min provisioning wait)
 - Failures 1+2 identical: deploy BlobNotFound at 16:26:23 and 16:32:55 (builds green, build_type=workflow correct). Diagnosis: Pages site provisioning completing after enablement.
 - This merge = attempt 3. If it fails again: owner-side rerun needed (Actions UI "Re-run failed jobs") — token lacks actions:write (dispatch/rerun 403).
+
+## 2026-11-22 — heartbeat: issue #33 (real example sites)
+
+- GitHub credential gate: OPEN (gh auth OK as AiTimosha, git push worked).
+- config/sites.yaml: replaced example.com placeholder with https://ilinyh.blog and https://diacraft.space (single "/" page each, tags/categories set).
+- npm test 0 fail; npm run build → 2 tiles, correct URLs. Local capture failed (sandbox chromium libs) — CI handles live capture.
+- PR #34 → dev, merged d7686c0; issue #33 closed with progress comment.
