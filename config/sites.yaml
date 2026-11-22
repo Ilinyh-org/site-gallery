@@ -5,14 +5,20 @@
 #   slug       - identifier used in screenshot filenames / S3 keys
 #   pages      - paths to capture (optional, default: ["/"])
 #   tags       - tags for client-side filtering
-#   categories - categories for client-side filtering
+#   categories - categories for filtering
 sites:
-  - name: "Example Site"
-    url: "https://example.com"
-    slug: "example"
+  - name: "Ilinyh's Blog"
+    url: "https://ilinyh.blog"
+    slug: "ilinyh-blog"
     pages:
       - "/"
-      - "/pricing"
-      - "/about"
-    tags: ["saas", "landing"]
-    categories: ["marketing"]
+    tags: ["blog", "personal"]
+    categories: ["writing"]
+
+  - name: "Diacraft"
+    url: "https://diacraft.space"
+    slug: "diacraft"
+    pages:
+      - "/"
+    tags: ["minecraft", "community"]
+    categories: ["gaming"]
