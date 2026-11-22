@@ -36,8 +36,7 @@ jobs:
 
   deploy:
     needs: build
-    # Gated: no real publish until the owner enables Pages and sets ENABLE_PAGES_DEPLOY=true (repo variable).
-    if: ${{ vars.ENABLE_PAGES_DEPLOY == 'true' }}
+    # Requires Pages enabled with source "GitHub Actions" (owner duty). Deploys on every green build.
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -19,7 +19,7 @@ export function renderPage(sites) {
       const slug = pageSlug(page);
       tiles.push(`      <a class="tile" data-tags="${esc((site.tags || []).join(' '))}" data-categories="${esc((site.categories || []).join(' '))}"
          href="${esc(site.url)}" target="_blank" rel="noopener">
-        <img src="/screenshots/${esc(site.slug)}/${esc(slug)}.png"
+        <img src="screenshots/${esc(site.slug)}/${esc(slug)}.png"
              alt="${esc(site.slug)} — ${esc(slug)}" loading="lazy" decoding="async"
              width="1280" height="720"
              onerror="this.closest('.tile').hidden=true;window.filterCheck&&filterCheck()">
@@ -39,7 +39,7 @@ export function renderPage(sites) {
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121212">
   <script>try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="site-header">
@@ -64,7 +64,7 @@ ${tiles.join('\n')}
     <p id="empty-message" hidden>Nothing found</p>
   </main>
 
-  <script type="module" src="/js/filter.js"></script>
+  <script type="module" src="js/filter.js"></script>
 </body>
 </html>
 `;
