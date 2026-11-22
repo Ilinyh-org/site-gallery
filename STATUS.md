@@ -243,3 +243,8 @@ All of these must be re-run once exec works.
 - ENABLE_PAGES_DEPLOY gate REMOVED from build-and-publish.yml deploy job (owner convention: no gate variable in his other repos; gate existed only to hold publish until owner confirmed Pages — condition now satisfied).
 - Subpath fix: generated HTML asset paths /css/style.css, /js/filter.js, /screenshots/... → relative (css/..., js/..., screenshots/...) — root-absolute paths 404 under the /site-gallery/ project subpath.
 - Verified: node --check, workflow YAML parse, npm test 16/16, SKIP_CAPTURE=1 build → public/index.html now carries relative paths.
+
+## 2026-11-22 — first Pages deploy attempt failed (transient); retrying
+- CI run 45043405289 (feebe08): build SUCCESS, deploy FAILED with BlobNotFound (GitHub Pages storage) ~7 min after owner enabled Pages. Pages config verified: build_type=workflow (source = GitHub Actions) — config is correct, so treat as transient initialization race.
+- Token lacks Actions write: rerun-failed-jobs 403, workflow_dispatch 403 — cannot re-trigger via API.
+- Retry path: this docs PR's merge into dev triggers a fresh full run with deploy.
