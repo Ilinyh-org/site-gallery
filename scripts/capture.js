@@ -43,7 +43,8 @@ export async function captureAll({ sites = null, outDir = '.tmp/screenshots', ca
 async function defaultCapture(site, page, outDir) {
   const fs = await import('node:fs/promises');
   const path = await import('node:path');
-  const { GIFEncoder, quantize, applyPalette } = await import('gifenc');
+  const gifencMod = await import('gifenc');
+  const { GIFEncoder, quantize, applyPalette } = gifencMod.default ?? gifencMod;
 
   await fs.mkdir(outDir, { recursive: true });
   const base = path.join(outDir, site.slug);
