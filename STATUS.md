@@ -237,3 +237,9 @@ All of these must be re-run once exec works.
 - #18: copy-screenshots.js ships captures into public/screenshots (same-origin tiles); pngjs dep added.
 - FIRST CI RUN: build-and-publish on 9e1b6dc → COMPLETED / SUCCESS (deploy skipped per gate). Real capture ran in CI.
 - Progress comments posted on #17 and #18; branches deleted remote+local.
+
+## 2026-11-22 — Pages enablement fix (owner enabled Pages; URL confirmed)
+- Owner enabled GitHub Pages (source: GitHub Actions) and confirmed URL https://ilinyh-org.github.io/site-gallery/.
+- ENABLE_PAGES_DEPLOY gate REMOVED from build-and-publish.yml deploy job (owner convention: no gate variable in his other repos; gate existed only to hold publish until owner confirmed Pages — condition now satisfied).
+- Subpath fix: generated HTML asset paths /css/style.css, /js/filter.js, /screenshots/... → relative (css/..., js/..., screenshots/...) — root-absolute paths 404 under the /site-gallery/ project subpath.
+- Verified: node --check, workflow YAML parse, npm test 16/16, SKIP_CAPTURE=1 build → public/index.html now carries relative paths.
