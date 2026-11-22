@@ -217,3 +217,6 @@ All of these must be re-run once exec works.
 - Issue poll: open assigned #15/#16/#17/#18; no new IlinyhGleb comments. No new work orders.
 - Scope probe (this tick's one): push of feat/17-pages-workflow (commit 402bc3b, #17+#18) REJECTED again — PAT still lacks `workflow` scope. Parked locally; waiting on owner PAT refresh.
 - #16 already merged (PR #20 + fix #21). No independent actionable roadmap step this tick; verification baseline intact.
+
+## 2026-11-22 — heartbeat 12:16 UTC
+- #17/#18 push retry: still scope-rejected (PAT lacks `workflow` scope). Parked branch consolidated: now carries the combined CI commit (build-and-publish.yml + #18 screenshots-in-build + pngjs dep) PLUS a deploy gate on ENABLE_PAGES_DEPLOY (verified: YAML parse, npm test 16/16, SKIP_CAPTURE build 3 tiles). Ready to ship when the scope lands.
