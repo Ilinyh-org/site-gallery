@@ -248,3 +248,7 @@ All of these must be re-run once exec works.
 - CI run 45043405289 (feebe08): build SUCCESS, deploy FAILED with BlobNotFound (GitHub Pages storage) ~7 min after owner enabled Pages. Pages config verified: build_type=workflow (source = GitHub Actions) — config is correct, so treat as transient initialization race.
 - Token lacks Actions write: rerun-failed-jobs 403, workflow_dispatch 403 — cannot re-trigger via API.
 - Retry path: this docs PR's merge into dev triggers a fresh full run with deploy.
+
+## 2026-11-22 — Pages deploy attempt 3 (after 10-min provisioning wait)
+- Failures 1+2 identical: deploy BlobNotFound at 16:26:23 and 16:32:55 (builds green, build_type=workflow correct). Diagnosis: Pages site provisioning completing after enablement.
+- This merge = attempt 3. If it fails again: owner-side rerun needed (Actions UI "Re-run failed jobs") — token lacks actions:write (dispatch/rerun 403).
