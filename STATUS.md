@@ -229,3 +229,11 @@ All of these must be re-run once exec works.
 
 ## 2026-11-22 — heartbeat 12:16 UTC
 - #17/#18 push retry: still scope-rejected (PAT lacks `workflow` scope). Parked branch consolidated: now carries the combined CI commit (build-and-publish.yml + #18 screenshots-in-build + pngjs dep) PLUS a deploy gate on ENABLE_PAGES_DEPLOY (verified: YAML parse, npm test 16/16, SKIP_CAPTURE build 3 tiles). Ready to ship when the scope lands.
+
+## 2026-11-22 — sub-issues #17 + #18 LANDED (owner refreshed PAT with workflow perms)
+- Scope wall lifted (new fine-grained PAT, suffix RvMwAU, Workflows permission confirmed by GitHub accepting the workflow-file push).
+- PR #27 self-merged into dev @ 9e1b6dc (one combined branch for both issues; STATUS.md merge-conflict resolved).
+- .github/workflows/build-and-publish.yml live: push-to-dev/dispatch; build job (npm ci, playwright chromium --with-deps, npm test, npm run build, upload-pages-artifact public) + deploy job GATED on ENABLE_PAGES_DEPLOY == 'true' (stays unset until owner enables Pages).
+- #18: copy-screenshots.js ships captures into public/screenshots (same-origin tiles); pngjs dep added.
+- FIRST CI RUN: build-and-publish on 9e1b6dc → COMPLETED / SUCCESS (deploy skipped per gate). Real capture ran in CI.
+- Progress comments posted on #17 and #18; branches deleted remote+local.
