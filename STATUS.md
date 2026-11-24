@@ -259,3 +259,10 @@ All of these must be re-run once exec works.
 - config/sites.yaml: replaced example.com placeholder with https://ilinyh.blog and https://diacraft.space (single "/" page each, tags/categories set).
 - npm test 0 fail; npm run build → 2 tiles, correct URLs. Local capture failed (sandbox chromium libs) — CI handles live capture.
 - PR #34 → dev, merged d7686c0; issue #33 closed with progress comment.
+
+## 2026-11-24 — heartbeat: issue #36 (S3 storage via GitHub secrets)
+- New assigned issue #36 claimed; feat/36-s3-secrets implemented + PR #37 merged to dev.
+- Build: real S3 upload when S3_BUCKET/S3_ACCESS_KEY/S3_SECRET_KEY env set (CI maps GitHub secrets S3_* to build env); count-only dry run otherwise (previous behavior).
+- Tiles: S3_PUBLIC_URL-hosted screenshot URLs when that secret set; else same-origin relative paths (Pages fallback).
+- Verified: node --check, workflow YAML parse, npm test 16/16, SKIP_CAPTURE build with and without S3_PUBLIC_URL (relative vs S3 src confirmed).
+- Owner duty noted on #36: add the S3_* secrets to repo settings.
