@@ -16,7 +16,14 @@ if (process.env.SKIP_CAPTURE === '1') {
 } else {
   try {
     results = await captureAll(); // { updated, skipped, failed }
-    await uploadAll(results.updated, { dryRun: true }); // S3 upload deferred; count-only dry run
+    // Issue #36: real S3 upload when credentials are provided (GitHub secrets
+    // mapped to env in CI); fall back to a count-only dry run otherwise.
+    const hasS3Creds = Boolean(process.env.S3_BUCKET && process.env.S3_ACCESS_KEY && process.env.S3_SECRET_KEY);
+    if (hasS3Creds) {
+      await uploadAll(results.updated);
+    } else {
+      await uploadAll(results.updated, { dryRun: true }); // count-only dry run
+    }
     for (const f of results.failed) {
       console.warn(`⚠️ WARNING: could not capture screenshot for ${f.slug}${f.page}: ${f.reason}`);
     }
