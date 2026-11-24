@@ -2,7 +2,11 @@
 // Replaces the former Hugo layer. No CDN: images referenced relatively from the same origin.
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { loadConfig, pageSlug } from './lib.js';
+import { loadConfig, pageSlug, publicUrl } from './lib.js';
+
+// S3 mode (issue #36): when S3_PUBLIC_URL is set, tiles point at S3-hosted
+// screenshots; otherwise tiles use same-origin relative paths (Pages assets).
+const s3Mode = () => Boolean(process.env.S3_PUBLIC_URL);
 
 const ROOT = process.cwd();
 const PUBLIC = path.join(ROOT, 'public');
@@ -19,7 +23,7 @@ export function renderPage(sites) {
       const slug = pageSlug(page);
       tiles.push(`      <a class="tile" data-tags="${esc((site.tags || []).join(' '))}" data-categories="${esc((site.categories || []).join(' '))}"
          href="${esc(site.url)}" target="_blank" rel="noopener">
-        <img src="screenshots/${esc(site.slug)}/${esc(slug)}.png"
+        <img src="${esc(s3Mode() ? publicUrl(site, page) : `screenshots/${esc(site.slug)}/${esc(slug)}.png`)}"
              alt="${esc(site.slug)} — ${esc(slug)}" loading="lazy" decoding="async"
              width="1280" height="720"
              onerror="this.closest('.tile').hidden=true;window.filterCheck&&filterCheck()">
