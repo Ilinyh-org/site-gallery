@@ -266,3 +266,9 @@ All of these must be re-run once exec works.
 - Tiles: S3_PUBLIC_URL-hosted screenshot URLs when that secret set; else same-origin relative paths (Pages fallback).
 - Verified: node --check, workflow YAML parse, npm test 16/16, SKIP_CAPTURE build with and without S3_PUBLIC_URL (relative vs S3 src confirmed).
 - Owner duty noted on #36: add the S3_* secrets to repo settings.
+
+## 2026-11-25 — issue #36: S3_REGION confirmed optional + secrets/vars robustness
+- Owner (issue comment 2026-11-25 08:17 UTC): S3_* secrets/variables added except S3_REGION; make it optional.
+- Confirmed: scripts/upload.js already defaults S3_REGION to us-east-1 (required keys are only S3_BUCKET/S3_ACCESS_KEY/S3_SECRET_KEY). Added tests/upload.test.js as a regression guard (works without S3_REGION; still requires the three core credentials).
+- Workflow hardening: each S3_* env now reads `secrets.X || vars.X` — values work whether the owner stored them as secrets or repo variables (secrets take precedence); no behavior change when only secrets exist.
+- Verified: workflow YAML parse, node --check, npm test (18 tests), SKIP_CAPTURE=1 build.

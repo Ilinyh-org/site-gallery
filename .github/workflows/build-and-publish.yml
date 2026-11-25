@@ -31,15 +31,16 @@ jobs:
       - name: Build (capture screenshots + generate site)
         run: npm run build
         env:
-          # Issue #36: S3 storage credentials/URL come from GitHub secrets,
-          # never from committed env files. Build degrades to same-origin
-          # assets when any are unset.
-          S3_BUCKET: ${{ secrets.S3_BUCKET }}
-          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-          S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY }}
-          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
-          S3_REGION: ${{ secrets.S3_REGION }}
-          S3_PUBLIC_URL: ${{ secrets.S3_PUBLIC_URL }}
+          # Issue #36: S3 values come from GitHub secrets or repo variables
+          # (secrets take precedence), never from committed env files. Build
+          # degrades to same-origin assets when any are unset.
+          # S3_REGION is optional: unset -> us-east-1 (scripts/upload.js).
+          S3_BUCKET: ${{ secrets.S3_BUCKET || vars.S3_BUCKET }}
+          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY || vars.S3_ACCESS_KEY }}
+          S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY || vars.S3_SECRET_KEY }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT || vars.S3_ENDPOINT }}
+          S3_REGION: ${{ secrets.S3_REGION || vars.S3_REGION }}
+          S3_PUBLIC_URL: ${{ secrets.S3_PUBLIC_URL || vars.S3_PUBLIC_URL }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public
