@@ -272,3 +272,8 @@ All of these must be re-run once exec works.
 - Confirmed: scripts/upload.js already defaults S3_REGION to us-east-1 (required keys are only S3_BUCKET/S3_ACCESS_KEY/S3_SECRET_KEY). Added tests/upload.test.js as a regression guard (works without S3_REGION; still requires the three core credentials).
 - Workflow hardening: each S3_* env now reads `secrets.X || vars.X` — values work whether the owner stored them as secrets or repo variables (secrets take precedence); no behavior change when only secrets exist.
 - Verified: workflow YAML parse, node --check, npm test (18 tests), SKIP_CAPTURE=1 build.
+
+## 2026-11-25 — heartbeat 21:17 UTC
+- Issue poll: open assigned #15/#16/#17/#18/#36; no new IlinyhGleb comments (last comment on #36 is ours → paused/waiting). No new work orders.
+- CI: latest run (05927ef, PR #39 merge, 17:55 UTC) SUCCESS — first green run with owner's S3_* secrets/vars live. Earlier superseded runs cancelled by design.
+- Git: local dev synced with origin/dev. No actionable roadmap step this tick (all remaining work waits on owner: S3 bucket verification, issue closure).
