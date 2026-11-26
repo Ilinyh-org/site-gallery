@@ -273,6 +273,11 @@ All of these must be re-run once exec works.
 - Workflow hardening: each S3_* env now reads `secrets.X || vars.X` — values work whether the owner stored them as secrets or repo variables (secrets take precedence); no behavior change when only secrets exist.
 - Verified: workflow YAML parse, node --check, npm test (18 tests), SKIP_CAPTURE=1 build.
 
+## 2026-11-26 — heartbeat 17:17 UTC
+- Issue poll: no new owner comments on any open issue; CI latest run (45703299454) SUCCESS; Pages site live and serving the gallery with real captures (ilinyh.blog, diacraft.space tiles verified via curl).
+- Parent work order #15 CLOSED with completion summary — all sub-issues (#16/#17/#18) landed, site live, S3 (#36) green with owner secrets. Remaining assigned open: #36 (owner duty: verify S3 bucket delivery + close).
+- Git: local dev fast-forwarded to origin/dev (059a5af). Verified: node --test all pass.
+
 ## 2026-11-25 — heartbeat 21:17 UTC
 - Issue poll: open assigned #15/#16/#17/#18/#36; no new IlinyhGleb comments (last comment on #36 is ours → paused/waiting). No new work orders.
 - CI: latest run (05927ef, PR #39 merge, 17:55 UTC) SUCCESS — first green run with owner's S3_* secrets/vars live. Earlier superseded runs cancelled by design.
