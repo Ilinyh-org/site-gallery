@@ -1,0 +1,57 @@
+# Sub-issues #17 + #18: build (with screenshot capture) and publish to GitHub Pages.
+# Triggers on pushes to dev and manual dispatch. Pages is deployed from the built artifact.
+name: build-and-publish
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - run: npm test
+      - name: Build (capture screenshots + generate site)
+        run: npm run build
+        env:
+          # Issue #36: S3 values come from GitHub secrets or repo variables
+          # (secrets take precedence), never from committed env files. Build
+          # degrades to same-origin assets when any are unset.
+          # S3_REGION is optional: unset -> us-east-1 (scripts/upload.js).
+          S3_BUCKET: ${{ secrets.S3_BUCKET || vars.S3_BUCKET }}
+          S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY || vars.S3_ACCESS_KEY }}
+          S3_SECRET_KEY: ${{ secrets.S3_SECRET_KEY || vars.S3_SECRET_KEY }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT || vars.S3_ENDPOINT }}
+          S3_REGION: ${{ secrets.S3_REGION || vars.S3_REGION }}
+          S3_PUBLIC_URL: ${{ secrets.S3_PUBLIC_URL || vars.S3_PUBLIC_URL }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    # Requires Pages enabled with source "GitHub Actions" (owner duty). Deploys on every green build.
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

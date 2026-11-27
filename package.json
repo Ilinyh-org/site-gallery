@@ -1,0 +1,19 @@
+{
+  "name": "site-screenshots-gallery",
+  "version": "3.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js",
+    "deploy": "node scripts/build.js && node scripts/deploy.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0",
+    "dotenv": "^16.4.0",
+    "gifenc": "^1.0.3",
+    "js-yaml": "^4.1.0",
+    "playwright": "^1.45.0",
+    "pngjs": "^7.0.0"
+  }
+}

@@ -1,0 +1,24 @@
+# Site list for the screenshot gallery.
+# Fields:
+#   name       - display name
+#   url        - main site URL (click target)
+#   slug       - identifier used in screenshot filenames / S3 keys
+#   pages      - paths to capture (optional, default: ["/"])
+#   tags       - tags for client-side filtering
+#   categories - categories for filtering
+sites:
+  - name: "Ilinyh's Blog"
+    url: "https://ilinyh.blog"
+    slug: "ilinyh-blog"
+    pages:
+      - "/"
+    tags: ["blog", "personal"]
+    categories: ["writing"]
+
+  - name: "Diacraft"
+    url: "https://diacraft.space"
+    slug: "diacraft"
+    pages:
+      - "/"
+    tags: ["minecraft", "community"]
+    categories: ["gaming"]
