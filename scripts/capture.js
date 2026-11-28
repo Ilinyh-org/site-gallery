@@ -2,7 +2,7 @@
 // Spec: open each page in Chromium at >=1280x720, on failure record it and keep going.
 import 'dotenv/config';
 import { chromium } from 'playwright';
-import { loadConfig, screenshotKeys } from './lib.js';
+import { loadConfig, screenshotKeys, pageSlug } from './lib.js';
 
 const WIDTH = 1280;
 const HEIGHT = 720;
@@ -47,7 +47,11 @@ async function defaultCapture(site, page, outDir) {
   const { GIFEncoder, quantize, applyPalette } = gifencMod.default ?? gifencMod;
 
   await fs.mkdir(outDir, { recursive: true });
-  const base = path.join(outDir, site.slug);
+  // Nested layout (issue #44 fix): .tmp/screenshots/<slug>/<page-slug>.png|gif —
+  // must match the tile/serving layout screenshots/<slug>/<page-slug>.png.
+  // The former flat <slug>.png layout 404'd same-origin tiles and collided
+  // when one site had multiple pages.
+  const base = path.join(outDir, site.slug, pageSlug(page));
   await fs.mkdir(path.dirname(base), { recursive: true });
 
   const browser = await chromium.launch();

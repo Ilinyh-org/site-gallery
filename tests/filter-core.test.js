@@ -1,7 +1,7 @@
 // Tests for pure filtering logic (filter-core.js). Run: node --test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { matches, uniqueLabels, applyFilters, toLabels } from '../static/js/filter-core.js';
+import { matches, matchesSearch, uniqueLabels, applyFilters, toLabels } from '../static/js/filter-core.js';
 
 const tiles = [
   { tags: 'saas landing', categories: 'marketing' },
@@ -48,4 +48,35 @@ test('applyFilters reports empty state', () => {
   const res = applyFilters(tiles, sel);
   assert.equal(res.visible.length, 0);
   assert.ok(res.empty);
+});
+
+// Search (issue #43 §2): pure logic tests.
+const searchable = {
+  name: "Ilinyh's Blog", domain: 'ilinyh.blog', tags: 'blog personal', categories: 'writing',
+};
+
+test('matchesSearch with empty/blank query shows everything', () => {
+  assert.ok(matchesSearch(searchable, ''));
+  assert.ok(matchesSearch(searchable, '   '));
+  assert.ok(matchesSearch(searchable, null));
+});
+
+test('matchesSearch matches name, domain, tags, categories case-insensitively', () => {
+  assert.ok(matchesSearch(searchable, 'blog'));
+  assert.ok(matchesSearch(searchable, 'ILINYH'));
+  assert.ok(matchesSearch(searchable, 'ilinyh.blog'));
+  assert.ok(matchesSearch(searchable, 'personal'));
+  assert.ok(matchesSearch(searchable, 'writing'));
+  assert.ok(!matchesSearch(searchable, 'shop'));
+});
+
+test('matchesSearch ANDs multiple terms', () => {
+  assert.ok(matchesSearch(searchable, 'blog ilinyh'));
+  assert.ok(!matchesSearch(searchable, 'blog shop'));
+});
+
+test('matchesSearch is safe on missing attributes', () => {
+  assert.doesNotThrow(() => matchesSearch({}, 'anything'));
+  assert.ok(matchesSearch({}, ''));          // empty query matches everything
+  assert.ok(!matchesSearch({}, 'anything')); // empty tile never matches a real query
 });

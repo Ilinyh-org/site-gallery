@@ -1,7 +1,7 @@
 // Tests for non-capture helpers (lib.js). Run: npm test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { pageSlug, screenshotKeys, publicUrl, loadConfig } from '../scripts/lib.js';
+import { pageSlug, screenshotKeys, publicUrl, loadConfig, sizeVariant } from '../scripts/lib.js';
 import path from 'node:path';
 
 test('pageSlug maps paths per spec', () => {
@@ -9,6 +9,16 @@ test('pageSlug maps paths per spec', () => {
   assert.equal(pageSlug('/pricing'), 'pricing');
   assert.equal(pageSlug('/about/team'), 'about-team');
   assert.equal(pageSlug('trailing/'), 'trailing');
+});
+
+test('sizeVariant is deterministic and one of three buckets (issue #43)', () => {
+  for (const slug of ['ilinyh-blog/index', 'diacraft/index', 'a/b', '']) {
+    assert.equal(sizeVariant(slug), sizeVariant(slug)); // stable
+    assert.ok(['sm', 'md', 'lg'].includes(sizeVariant(slug)));
+  }
+  // Sanity: not everything collapses into one bucket.
+  const buckets = new Set(['a', 'b', 'c', 'd', 'e'].map((s) => sizeVariant(s)));
+  assert.ok(buckets.size > 1);
 });
 
 test('screenshotKeys build spec S3 keys', () => {

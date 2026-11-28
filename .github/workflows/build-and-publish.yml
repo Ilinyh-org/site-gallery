@@ -5,6 +5,9 @@ name: build-and-publish
 on:
   push:
     branches: [dev]
+  pull_request:
+    branches: [dev]
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 permissions:
@@ -13,7 +16,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -41,13 +44,24 @@ jobs:
           S3_ENDPOINT: ${{ secrets.S3_ENDPOINT || vars.S3_ENDPOINT }}
           S3_REGION: ${{ secrets.S3_REGION || vars.S3_REGION }}
           S3_PUBLIC_URL: ${{ secrets.S3_PUBLIC_URL || vars.S3_PUBLIC_URL }}
+      # Issue #43 §12: visual regression screenshots (3 viewports x light/dark).
+      - name: Visual check (homepage screenshots)
+        run: node scripts/visual-check.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-screenshots
+          path: docs/visual
+          retention-days: 30
+      # Pages deploy only from dev pushes — PR builds are verify-only.
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name == 'push'
         with:
           path: public
 
   deploy:
     needs: build
-    # Requires Pages enabled with source "GitHub Actions" (owner duty). Deploys on every green build.
+    if: github.event_name == 'push'
+    # Requires Pages enabled with source "GitHub Actions" (owner duty). Deploys on every green dev build.
     runs-on: ubuntu-latest
     environment:
       name: github-pages
