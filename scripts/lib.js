@@ -20,10 +20,20 @@ export function loadConfig(root = process.cwd()) {
   return doc.sites;
 }
 
-// "/" -> "index"; "/pricing" -> "pricing"; "/about/team" -> "about-team"
+// "about/team" -> "about-team"
 export function pageSlug(pagePath) {
   const clean = pagePath.replace(/^\/+|\/+$/g, '');
   return clean === '' ? 'index' : clean.replace(/\//g, '-');
+}
+
+// Deterministic preview-height variant (issue #43): stable per page slug so the
+// masonry-inspired grid gets controlled variation without arbitrary random
+// heights. Exactly three intentional buckets.
+export function sizeVariant(slug) {
+  const s = String(slug || '');
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return ['sm', 'md', 'lg'][h % 3];
 }
 
 export function screenshotKeys(site) {

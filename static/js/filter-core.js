@@ -26,3 +26,14 @@ export function applyFilters(tiles, selected) {
   const visible = tiles.filter((t) => matches(t, selected));
   return { visible, empty: visible.length === 0 };
 }
+
+// Search (issue #43 §2): case-insensitive multi-term match over name, domain,
+// tags and categories. All whitespace-separated terms must match (AND).
+export function matchesSearch(tile, query) {
+  const q = String(query || '').trim().toLowerCase();
+  if (!q) return true;
+  const hay = [tile.name, tile.domain, tile.tags, tile.categories]
+    .map((v) => String(v || '').toLowerCase())
+    .join(' ');
+  return q.split(/\s+/).every((term) => hay.includes(term));
+}
