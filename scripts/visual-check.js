@@ -55,7 +55,7 @@ try {
   await fs.mkdir(OUT, { recursive: true });
   for (const theme of THEMES) {
     for (const shot of SHOTS) {
-      const ctx = await browser.newPage({
+      const ctx = await browser.newContext({
         viewport: { width: shot.width, height: shot.height },
         colorScheme: theme,
       });
