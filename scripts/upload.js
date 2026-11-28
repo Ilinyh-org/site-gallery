@@ -66,11 +66,11 @@ async function isIdentical(s3, bucket, key, body) {
 
 // CLI entry: node scripts/upload.js (re-uploads whatever is in .tmp/screenshots)
 if (process.argv[1] && process.argv[1].endsWith('upload.js')) {
-  const { loadConfig, screenshotKeys } = await import('./lib.js');
+  const { loadConfig, screenshotKeys, pageSlug } = await import('./lib.js');
   const items = [];
   for (const site of loadConfig()) {
     for (const entry of screenshotKeys(site)) {
-      const base = path.join('.tmp', 'screenshots', site.slug);
+      const base = path.join('.tmp', 'screenshots', site.slug, pageSlug(entry.page));
       items.push({ site, page: entry.page, pngKey: entry.pngKey, gifKey: entry.gifKey,
         files: { png: `${base}.png`, gif: `${base}.gif` } });
     }
