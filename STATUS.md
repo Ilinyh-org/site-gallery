@@ -282,3 +282,12 @@ All of these must be re-run once exec works.
 - Issue poll: open assigned #15/#16/#17/#18/#36; no new IlinyhGleb comments (last comment on #36 is ours → paused/waiting). No new work orders.
 - CI: latest run (05927ef, PR #39 merge, 17:55 UTC) SUCCESS — first green run with owner's S3_* secrets/vars live. Earlier superseded runs cancelled by design.
 - Git: local dev synced with origin/dev. No actionable roadmap step this tick (all remaining work waits on owner: S3 bucket verification, issue closure).
+
+## 2026-11-28 — heartbeat: issue #43 (minimalist homepage redesign)
+- New assigned issue #43 claimed; feat/issue-43-masonry-redesign → PR #44 → dev, LEFT UNMERGED per issue §15 ("do not merge without approval") — supersedes charter self-merge for this issue.
+- Redesign per spec §1–11: masonry-inspired grid (4/3/2/1, max-w 1440px), fixed-height previews with 3 deterministic variants (lib.js sizeVariant), system/light/dark themes (localStorage, no-FOUC, color-scheme), filters + count + search (filter-core matchesSearch), SEO (canonical/OG/sitemap/robots), a11y pass, footer/header/intro/toolbar/gallery structure.
+- FIXED live-site bug en route: capture.js wrote flat .tmp/screenshots/<slug>.png while tiles serve screenshots/<slug>/<page-slug>.png → same-origin tiles 404'd on Pages (live gallery showed no tiles). Now nested; also fixes multi-page collision. upload.js CLI aligned; S3 key mapping unchanged.
+- Pipeline hardening in PR: workflow pull_request trigger (verify-only; Pages deploy gated to push events), visual-check.js (Playwright, 6 shots 1440/1024/390 × light/dark, asserts no broken images + no horizontal overflow, uploads artifact), npm run visual.
+- Verified: node --check, npm test 23/23, SKIP_CAPTURE build, CI run 46128470816 green (capture 2/2, visual assertions pass); shots committed under docs/visual/ (1440/1024/390 widths exact, both themes, real captures rendering).
+- Note for owner (#36): S3_* env echoed EMPTY in pull_request run — secrets may be environment-scoped (github-pages) rather than repo-level; upload likely falls back to dry-run in PR runs (dev-push runs unaffected if repo-level).
+- State: PR #44 awaiting OWNER approval to merge (never self-merge per §15); issue #43 comment posted (paused per scheme).
