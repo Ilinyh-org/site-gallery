@@ -196,7 +196,7 @@ a { color: inherit; }
 }
 @media (min-width: 1440px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
 
-.card { margin: 0; }
+.card { margin: 0; min-width: 0; } /* min-width:0 — fixed-height images must not inflate 1fr tracks */
 
 /* Fixed-height viewport previews (§4): three deterministic variants.
    object-position: top center keeps the site header visible. */
@@ -216,6 +216,7 @@ a { color: inherit; }
 }
 .tile img {
   width: 100%;
+  max-width: 100%;
   object-fit: cover;
   object-position: top center;
   display: block;

@@ -65,7 +65,42 @@ try {
       }, theme);
       const page = await ctx.newPage();
       await page.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: 'networkidle' });
-      await page.waitForTimeout(300); // settle lazy images/transitions
+      // Force lazy images to load: scroll through the page, wait until every
+      // <img> has finished (complete + decoded pixels), then scroll back.
+      await page.evaluate(async () => {
+        await new Promise((resolveScroll) => {
+          let y = 0;
+          const step = () => {
+            y += 600;
+            window.scrollTo(0, y);
+            if (y < document.body.scrollHeight) setTimeout(step, 80);
+            else { window.scrollTo(0, 0); setTimeout(resolveScroll, 250); }
+          };
+          step();
+        });
+      });
+      await page.waitForFunction(
+        () => Array.from(document.images).every((img) => img.complete),
+        { timeout: 30000 },
+      );
+      // Diagnostics (issue #43 §12: no significant layout shift / broken images).
+      const report = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        innerWidth: window.innerWidth,
+        images: Array.from(document.images).map((img) => ({
+          src: img.currentSrc || img.src,
+          ok: img.complete && img.naturalWidth > 0,
+        })),
+      }));
+      console.log(`visual diagnostics: ${JSON.stringify(report)}`);
+      const broken = report.images.filter((img) => !img.ok);
+      if (broken.length > 0) {
+        throw new Error(`visual-check: broken images: ${broken.map((i) => i.src).join(', ')}`);
+      }
+      if (report.scrollWidth > report.innerWidth + 1) {
+        throw new Error(`visual-check: horizontal overflow (scrollWidth ${report.scrollWidth} > viewport ${report.innerWidth})`);
+      }
+      await page.waitForTimeout(300); // settle transitions
       const file = path.join(OUT, `${shot.name}-${theme}.png`);
       await page.screenshot({ path: file, fullPage: true });
       console.log(`visual: ${path.relative(ROOT, file)}`);
